@@ -6,6 +6,7 @@ Function hooks in Windows kernel
 # Overview
 
 This kernel mode driver executes inline-hooking against kernel function.  
+
 In this case the driver hooks `NtQuerySystemInformation` and since the driver does not care about its original functionalities  
 and the implementation of its function is an empty, it causes the operating system crash.  
 That also means it has a high possibility that this could be result in critical damage to the system.
