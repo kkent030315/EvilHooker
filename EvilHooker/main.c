@@ -118,9 +118,17 @@ NTSTATUS PerformHook()
     //
     BYTE shell_code[] =
     {
-        0x51, 0x48, 0xB9,
+        // push rcx
+        0x51,
+
+        // movabs rcx,0xOurFuncAddres (push into register as 64-bit value)
+        0x48, 0xB9,
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+
+        // xchg QWORD PTR [rsp],rcx (transpose operand)
         0x48, 0x87, 0x0C, 0x24,
+
+        // ret
         0xC3
     };
 
